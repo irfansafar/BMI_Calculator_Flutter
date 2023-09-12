@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: reusableCard(
-                      child: Text('data'),
+                      child: Text('data1'),
                     ),
                   ),
                   Expanded(
