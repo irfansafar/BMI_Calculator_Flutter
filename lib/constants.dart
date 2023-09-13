@@ -7,3 +7,5 @@ const kInactiveColor = Color(0xFF111328);
 const kButtonColor = Color(0xffeb1555);
 const kButtonSecondaryColor = Color(0xff1c1f32);
 const kResultColor = Color(0xff22e67b);
+
+enum Gender { male, female }
