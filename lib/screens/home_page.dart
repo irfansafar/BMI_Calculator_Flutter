@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bmi_calc_flutter_23/compenents/card_items.dart';
 import 'package:bmi_calc_flutter_23/compenents/reusable_cards.dart';
+import 'package:bmi_calc_flutter_23/screens/result_page.dart';
+import 'package:bmi_calc_flutter_23/compenents/bottom_button.dart';
+import 'package:bmi_calc_flutter_23/compenents/bmi_calc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,6 +17,8 @@ class _HomePageState extends State<HomePage> {
   Color maleCardColor = kInactiveColor;
   Color femaleCardColor = kInactiveColor;
   int height = 180;
+  int weight = 60;
+  int age = 20;
 
   void updateColor(gender) {
     if (gender == Gender.male) {
@@ -95,8 +100,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text(
                           height.toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 80),
+                          style: kContentValue,
                         ),
                         SizedBox(
                           width: 5,
@@ -130,25 +134,107 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: reusableCard(
-                      color: kInactiveColor,
-                      child: Text('data1'),
-                    ),
+                        color: kInactiveColor,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'WEIGHT',
+                              style: kContentTitle,
+                            ),
+                            Text(
+                              weight.toString(),
+                              style: kContentValue,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                FloatingActionButton(
+                                  child: Icon(Icons.remove),
+                                  onPressed: () {
+                                    setState(() {
+                                      weight--;
+                                    });
+                                  },
+                                  backgroundColor: kButtonSecondaryColor,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                FloatingActionButton(
+                                  child: Icon(Icons.add),
+                                  onPressed: () {
+                                    setState(() {
+                                      weight++;
+                                    });
+                                  },
+                                  backgroundColor: kButtonSecondaryColor,
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
                   ),
                   Expanded(
                     child: reusableCard(
-                      color: kInactiveColor,
-                      child: Text('data'),
-                    ),
+                        color: kInactiveColor,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'AGE',
+                              style: kContentTitle,
+                            ),
+                            Text(
+                              age.toString(),
+                              style: kContentValue,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                FloatingActionButton(
+                                  child: Icon(Icons.remove),
+                                  onPressed: () {
+                                    setState(() {
+                                      age--;
+                                    });
+                                  },
+                                  backgroundColor: kButtonSecondaryColor,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                FloatingActionButton(
+                                  child: Icon(Icons.add),
+                                  onPressed: () {
+                                    setState(() {
+                                      age++;
+                                    });
+                                  },
+                                  backgroundColor: kButtonSecondaryColor,
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
                   ),
                 ],
               ),
             ),
-            Container(
-              height: 80,
-              width: double.infinity,
-              color: Colors.yellow,
-              child: Text('data'),
-            )
+            BottomButton(
+              label: 'CALCULATE YOUR BMI',
+              onTap: () {
+                CalcBrain calc = CalcBrain(height: height, weight: weight);
+
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Result(
+                    resultValue: calc.CalcBmi(),
+                    bmiStatus: calc.BmiStatus(),
+                    interpretetion: calc.getInterpretation(),
+                  );
+                }));
+              },
+            ),
           ],
         ));
   }
